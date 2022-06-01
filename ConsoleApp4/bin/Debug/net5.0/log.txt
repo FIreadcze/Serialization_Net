@@ -1,0 +1,57 @@
+2022-06-01 13:30:37.355 +02:00 [INF] App has started
+2022-06-01 13:30:38.304 +02:00 [ERR]  An error occured, the reason was logged 
+System.IO.IOException: The process cannot access the file 'C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Target Files\Document1.json' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode, FileAccess access)
+   at ConsoleApp4.Program.Main(String[] args) in C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Program.cs:line 88
+2022-06-01 13:31:26.869 +02:00 [INF] App has started
+2022-06-01 13:32:53.635 +02:00 [INF] App has started
+2022-06-01 13:37:22.194 +02:00 [INF] App has started
+2022-06-01 13:44:41.353 +02:00 [INF] App has started
+2022-06-01 13:44:56.400 +02:00 [ERR] Source file was not found
+2022-06-01 13:46:19.183 +02:00 [INF] App has started
+2022-06-01 13:46:46.564 +02:00 [ERR] Source file was not found
+2022-06-01 13:47:46.857 +02:00 [INF] App has started
+2022-06-01 13:48:12.867 +02:00 [INF] App has started
+2022-06-01 13:50:04.295 +02:00 [INF] App has started
+2022-06-01 13:50:21.589 +02:00 [ERR] Source file was not found
+2022-06-01 14:02:27.511 +02:00 [INF] App has started
+2022-06-01 14:26:53.786 +02:00 [INF] App has started
+2022-06-01 14:28:22.735 +02:00 [INF] App has started
+2022-06-01 14:28:57.533 +02:00 [INF] App has started
+2022-06-01 14:57:13.169 +02:00 [INF] App has started
+2022-06-01 15:35:35.322 +02:00 [INF] App has started
+2022-06-01 15:36:16.533 +02:00 [INF] App has started
+2022-06-01 15:37:36.321 +02:00 [INF] App has started
+2022-06-01 15:39:38.042 +02:00 [INF] App has started
+2022-06-01 15:40:13.748 +02:00 [INF] App has started
+2022-06-01 15:40:27.981 +02:00 [INF] App has started
+2022-06-01 15:47:24.520 +02:00 [INF] App has started
+2022-06-01 15:50:13.764 +02:00 [INF] App has started
+2022-06-01 15:50:18.067 +02:00 [ERR]  An error occured, the reason was logged 
+System.IO.IOException: The process cannot access the file 'C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Target Files\Document1.json' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.StreamWriter.ValidateArgsAndOpenPath(String path, Boolean append, Encoding encoding, Int32 bufferSize)
+   at System.IO.StreamWriter..ctor(String path)
+   at ConsoleApp4.Program.Main() in C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Program.cs:line 84
+2022-06-01 15:51:26.565 +02:00 [INF] App has started
+2022-06-01 15:51:30.342 +02:00 [ERR]  An error occured, the reason was logged 
+System.IO.IOException: The process cannot access the file 'C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Target Files\Document1.json' because it is being used by another process.
+   at System.IO.FileStream.ValidateFileHandle(SafeFileHandle fileHandle)
+   at System.IO.FileStream.CreateFileOpenHandle(FileMode mode, FileShare share, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode, FileAccess access)
+   at ConsoleApp4.Program.Main() in C:\Users\adamj\source\repos\ConsoleApp4\ConsoleApp4\Program.cs:line 84
+2022-06-01 15:53:30.201 +02:00 [INF] App has started
+2022-06-01 15:57:05.176 +02:00 [INF] App has started
+2022-06-01 15:57:38.012 +02:00 [INF] App has started
+2022-06-01 15:58:18.259 +02:00 [INF] App has started
+2022-06-01 16:36:30.951 +02:00 [INF] App has started
+2022-06-01 16:36:59.522 +02:00 [INF] App has started
+2022-06-01 16:55:04.946 +02:00 [INF] App has started
