@@ -7,19 +7,17 @@ using System.Xml.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Xml;
 using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+using System.Net.Http;
+using ConsoleApp4.Models;
+using ConsoleApp4.Utilities;
+using ConsoleApp4.Logic;
 
 namespace ConsoleApp4
 {
-    /// <summary>
-    /// Document object
-    /// </summary>
-    ///
-    public class Document
-    {
-        public string Title { get; set; }
-        public string Text { get; set; }
-
-    }
+   
     public class Program
     {
         static void Main()
@@ -36,64 +34,54 @@ namespace ConsoleApp4
 
             Log.Information("App has started");
 
-            //1 missing + -possible error while reading white spaces
-            var sourceFileName = Path.Combine(Environment.CurrentDirectory, config["DirectoryAddress:Source"]);
-            //XmlTextReader reader1 = new XmlTextReader(config["DirectoryAddress:Source"]);
-            //string m = reader1.readto
-            var targetFileName = Path.Combine(Environment.CurrentDirectory, config["DirectoryAddress:Target"]);
+
+            Input inputData = new Input();
+            Output outputData = new Output();
 
 
-            if (!Directory.Exists(sourceFileName.Substring(0, sourceFileName.LastIndexOf('\\'))))
-            {
-                Directory.CreateDirectory(sourceFileName.Substring(0, sourceFileName.LastIndexOf('\\')));
-            }
-            if (!Directory.Exists(targetFileName.Substring(0, targetFileName.LastIndexOf('\\'))))
-            {
-              Directory.CreateDirectory(targetFileName.Substring(0, targetFileName.LastIndexOf('\\')));
-            }
+            Document doc = new Document();
+
+            //checking if the input is Http
+            BusinessLogic.IsInputHttpOrFile(inputData, config["DirectoryAddress:Source"]);
+          
+
+            outputData.TargetPath = Path.Combine(Environment.CurrentDirectory, config["DirectoryAddress:Target"]);
+
+            
+            BusinessLogic.CheckDirOutputExistorCreate(outputData);
+           
 
             try
             {
-                if (!File.Exists(sourceFileName)) { Log.Error("Source file was not found"); }
-                if (!File.Exists(targetFileName)) {
 
-                    using (var myFile = File.Create(targetFileName))
+                if (!inputData.IsHttp) { BusinessLogic.CheckInputFilexist(inputData); }
+                BusinessLogic.CheckOutputFilexist(outputData);
+              
+                if (!inputData.IsHttp)//in case data is from file
+                {
+                    switch (Path.GetExtension(config["DirectoryAddress:Source"]))
                     {
-                    myFile.Close();
+                        case Constants.xml:
+                            doc = BusinessLogic.ReadInputXml(inputData.SourcePath, doc);
+                            break;
+                        case Constants.json:
+                            doc = BusinessLogic.ReadInputJson(inputData.SourcePath, doc);
+                            break;
+                        default:
+                            break;
                     }
-                    //var myFile = File.Create(targetFileName);
 
                 }
-                Document doc = new Document() ;
-                switch (Path.GetExtension(config["DirectoryAddress:Source"]))
+                if (inputData.IsHttp)//in case data is from http
                 {
-                    case ".xml":
-                        doc=ReadInputXml(sourceFileName,doc);
-                        break;
-                    case ".json":
-                        doc=ReadInputJson(sourceFileName, doc);
-                        break;
-                    default:
-                        break;
-                }
-
-                using (StreamWriter file = File.CreateText(targetFileName))
-                {
-                var serializedDoc = JsonConvert.SerializeObject(doc, Newtonsoft.Json.Formatting.Indented);
-                 var token =   JToken.Parse(serializedDoc);
-                JsonSerializer se = new JsonSerializer();
-                se.Serialize(file, token);
-
+                    doc = BusinessLogic.SerializeInputFromHttp(inputData.SourcePath, doc);
                 }
 
 
-                //var serializedDoc = JsonConvert.SerializeObject(doc);
-                //var targetStream = File.Open(targetFileName, FileMode.Create, FileAccess.Write);
-                //var sw = new StreamWriter(targetStream);
 
-                //sw.Write(serializedDoc);
-                //better to dispose obj
-                //targetStream.Dispose();
+                BusinessLogic.SaveOutputToFile(config["DirectoryAddress:Target"],outputData,doc);
+
+              
             }
             catch (Exception ex)
             {
@@ -105,39 +93,6 @@ namespace ConsoleApp4
                 Log.CloseAndFlush();
                 Log.Information("App has finished");
             }
-        }
-
-        public static Document ReadInputXml(string sourceFileName,Document doc)
-        {
-            FileStream sourceStream = File.Open(sourceFileName, FileMode.Open);
-            var reader = new StreamReader(sourceStream);
-            string input = reader.ReadToEnd();
-            //better to dispose object
-            sourceStream.Dispose();
-            reader.Dispose();
-            //moved to catch setion
-            var xdoc = XDocument.Parse(input);
-            doc.Title = xdoc.Root.Element("title").Value;
-                doc.Text = xdoc.Root.Element("text").Value;
-            return doc;
-        }
-        public static Document ReadInputJson(string sourceFileName, Document doc)
-        {
-
-           // StreamReader file = File.OpenText(@"c:\movie.json")
-            FileStream sourceStream = File.Open(sourceFileName, FileMode.Open);
-            var reader = new StreamReader(sourceStream);
-            //string input = reader.ReadToEnd();
-            //better to dispose object
-            JsonSerializer serializer = new JsonSerializer();
-           doc =  (Document)serializer.Deserialize(reader, typeof(Document));
-            sourceStream.Dispose();
-            reader.Dispose();
-            return doc;
-            //moved to catch setion
-            //doc.Title = xdoc.Root.Element("title").Value;
-            //doc.Text = xdoc.Root.Element("text").Value;
-            //return doc;
         }
     }
 }
